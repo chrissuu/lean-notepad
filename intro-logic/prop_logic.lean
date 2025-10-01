@@ -3,6 +3,7 @@ theorem and_left (P Q: Prop) : P ∧ Q → P := by
   intro h
   exact h.left
 
+
 -- Thm 2. P ∧ Q → Q
 theorem and_right (P Q: Prop) : P ∧ Q → Q := by
   intro h
@@ -39,3 +40,9 @@ theorem contrapositive (P Q : Prop) : (P → Q) → (¬ Q → ¬ P) := by
   intro p
   have q : Q := pimpq p
   exact nq q -- nq is an implication that ¬q → False. So by nq q steps to False
+
+
+theorem and_or_distrib (P Q R : Prop) : P ∧ (Q ∨ R) → (P ∧ Q) ∨ (P ∧ R) := by
+  intro p_q_or_r
+  have p : P := p_q_or_r.left
+  have q_or_r := p_q_or_r.right
