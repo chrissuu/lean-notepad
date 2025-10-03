@@ -60,7 +60,13 @@ theorem group_hom_preserves_one
   φ.map (e : G) = (e : H) := by
   have h_eq : φ.map (e : G) = φ.map (e : G) := by rfl
   have h : (Group.inv (φ.map e)) * (φ.map e) = (Group.inv (φ.map e)) * (φ.map e) := left_star_eq (Group.inv (φ.map e)) (φ.map e) (φ.map e) h_eq
+  nth_grewrite 2 [Group.inv_star] at h
+  nth_grewrite 2 [← Group.star_one (e)] at h
+  rw [GroupHomomorphism.preserves_star] at h
+  rw [Group.star_assoc] at h
   rw [Group.inv_star] at h
+  rw [Group.one_star] at h
+  exact h
 
 theorem group_hom_preserves_inv
   {G H : Type} [Group G] [Group H]
