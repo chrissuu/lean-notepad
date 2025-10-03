@@ -46,22 +46,32 @@ theorem inverse_is_unique
     _ = e * Group.inv v         := by rw [h]
     _ = Group.inv v             := by rw [Group.one_star]
 
--- theorem group_hom_preserves_inv
---   {G H : Type} [Group G] [Group H]
---   (φ : GroupHomomorphism)
---   (g : G) :
---   φ.map (Group.inv g) = Group.inv (φ.map g) := by
---   calc
---     φ.map (Group.inv g) = φ.map ()
+theorem left_star_eq
+  {G : Type} [Group G]
+  (g u v : G)
+  (h : u = v)
+  : g * u = g * v := by
+  calc
+    g * u = g * v := by rw [h]
 
+theorem group_hom_preserves_one
+  {G H : Type} [Group G] [Group H]
+  (φ : GroupHomomorphism) :
+  φ.map (e : G) = (e : H) := by
+  have h_eq : φ.map (e : G) = φ.map (e : G) := by rfl
+  have h : (Group.inv (φ.map e)) * (φ.map e) = (Group.inv (φ.map e)) * (φ.map e) := left_star_eq (Group.inv (φ.map e)) (φ.map e) (φ.map e) h_eq
+  rw [Group.inv_star] at h
 
-
--- theorem group_hom_preserves_one
---   {G H : Type} [Group G] [Group H]
---   (φ : GroupHomomorphism) :
---   φ.map (e : G) = (e : H) := by
---   calc
---     φ.map (e) = φ.map (e * e) := by rw [Group.one_star e]
---     _             = (φ.map (e * (Group.inv e) * e)) := by rw [Group.star_inv e]
---     _             = (φ.map (e * (Group.inv e)) * (φ.map e)) := by rw [GroupHomomorphism.preserves_star]
---     _ = (φ.map (e) * (φ.map (Group.inv e)) * (φ.map e)) := by rw [GroupHomomorphism.preserves_star]
+theorem group_hom_preserves_inv
+  {G H : Type} [Group G] [Group H]
+  (φ : GroupHomomorphism)
+  (g : G) :
+  φ.map (Group.inv g) = (Group.inv (φ.map g) : H) := by
+  calc
+    φ.map (Group.inv g) = (e : H) * (φ.map (Group.inv g)) := by rw [Group.one_star]
+                      _ = (Group.inv (φ.map g) * (φ.map g)) * (φ.map (Group.inv g)) := by rw [Group.inv_star]
+                      _ = (Group.inv (φ.map g)) * ((φ.map g) * (φ.map (Group.inv g))) := by rw [Group.star_assoc]
+                      _ = (Group.inv (φ.map g)) * (φ.map (g * Group.inv g)) := by rw [GroupHomomorphism.preserves_star]
+                      _ = (Group.inv (φ.map g)) * (φ.map (e)) := by rw [Group.star_inv]
+                      _ = (Group.inv (φ.map g)) * (e : H) := by rw [group_hom_preserves_one]
+                      _ = Group.inv (φ.map g) := by rw [Group.star_one]
