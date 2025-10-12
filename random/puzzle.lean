@@ -98,7 +98,6 @@ def get_dates_in_range (date_left : Date) (date_right : Date) : List Date :=
   month_day_pairs >>= fun (month, day) =>
     years |> List.map (fun y => { month := month, day := day, year := y : Date })
 
-
 def get_square_dates_in_range (date_left : Date) (date_right : Date) : List Date :=
   List.filter (λ date => is_square_date_b date) (get_dates_in_range date_left date_right)
 
