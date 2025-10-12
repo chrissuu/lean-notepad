@@ -1,0 +1,4 @@
+pkill -f lean --signal SIGKILL
+lake clean
+lake exe cache get!
+restart server.
