@@ -87,11 +87,6 @@ def square_month_day_pairs : List (Nat × Nat) :=
     (square_days month).filter (· ≤ num_days)
       |>.map (λ day => (month, day))
 
-def list_cross_product3 (A : List α) (B : List β) (C : List γ) : List (α × β × γ) :=
-  A >>= fun a =>
-    B >>= fun b =>
-      C >>= fun c => [(a, b, c)]
-
 -- Gets dates inclusive between <date_left>, <date_right>
 def get_dates_in_range (date_left : Date) (date_right : Date) : List Date :=
   let year_count := date_right.year - date_left.year + 1
