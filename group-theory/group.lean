@@ -12,5 +12,3 @@ structure MyGroup (α : Type) where
   (mul_one : ∀ a, a ∈ carrier → mul a one = a)
   (mul_inv : ∀ a, a ∈ carrier → mul a (inv a) = one)
   (inv_mul : ∀ a, a ∈ carrier → mul (inv a) a = one)
-
-structure GroupHom {α β: Type} (G : Group α) (H : Group β) where
